@@ -1,12 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  Platform,
-} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { ScreenRecorderManager } from 'react-native-screen-recorder';
 
 export default function App() {
@@ -31,11 +24,6 @@ export default function App() {
   };
 
   const startRecording = async () => {
-    if (Platform.OS !== 'ios') {
-      Alert.alert('알림', 'iOS에서만 사용 가능합니다.');
-      return;
-    }
-
     try {
       await ScreenRecorderManager.startScreenRecording();
       setIsRecording(true);
@@ -78,7 +66,7 @@ export default function App() {
 
       <View style={styles.statusContainer}>
         <Text style={styles.statusText}>
-          ReplayKit 사용 가능:{' '}
+          스크린 레코딩 사용 가능:{' '}
           {isAvailable === null ? '확인 중...' : isAvailable ? '예' : '아니오'}
         </Text>
         <Text style={styles.statusText}>현재 상태: {status}</Text>
@@ -116,9 +104,10 @@ export default function App() {
 
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>
-          • iOS 9.0 이상에서만 사용 가능합니다{'\n'}• 시뮬레이터에서는 작동하지
-          않습니다{'\n'}• 실제 기기에서 테스트해주세요{'\n'}• 마이크 권한이
-          필요할 수 있습니다
+          • iOS 9.0+ / Android 5.0+ 에서 사용 가능합니다{'\n'}• 시뮬레이터에서는
+          작동하지 않습니다{'\n'}• 실제 기기에서 테스트해주세요{'\n'}• 스크린
+          레코딩 권한이 필요합니다{'\n'}• Android에서는 MediaProjection 권한을
+          허용해야 합니다
         </Text>
       </View>
     </View>

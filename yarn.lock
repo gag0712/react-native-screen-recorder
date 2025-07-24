@@ -10319,6 +10319,7 @@ __metadata:
     "@evilmartians/lefthook": "npm:^1.5.0"
     "@react-native-community/cli": "npm:15.0.0-alpha.2"
     "@react-native/babel-preset": "npm:0.79.2"
+    "@react-native/codegen": "npm:0.79.2"
     "@react-native/eslint-config": "npm:^0.78.0"
     "@release-it/conventional-changelog": "npm:^9.0.2"
     "@types/jest": "npm:^29.5.5"

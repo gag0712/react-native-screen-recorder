@@ -1,9 +1,11 @@
 package screenrecorder.example
 
+import android.content.Intent
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
+import com.screenrecorder.ScreenRecorderModule
 
 class MainActivity : ReactActivity() {
 
@@ -19,4 +21,12 @@ class MainActivity : ReactActivity() {
    */
   override fun createReactActivityDelegate(): ReactActivityDelegate =
       DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+  
+    val reactContext = this.reactNativeHost.reactInstanceManager?.currentReactContext
+    val screenRecorderModule = reactContext?.getNativeModule(ScreenRecorderModule::class.java)
+    screenRecorderModule?.handleActivityResult(requestCode, resultCode, data)
+  }
 }
