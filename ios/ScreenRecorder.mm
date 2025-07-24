@@ -35,14 +35,17 @@ RCT_EXPORT_MODULE()
         return;
     }
     
-    __weak typeof(self) weakSelf = self;
+    __weak ScreenRecorder *weakSelf = self;
     [self.screenRecorder startRecordingWithHandler:^(NSError * _Nullable error) {
+        ScreenRecorder *strongSelf = weakSelf;
+        if (!strongSelf) return;
+        
         if (error) {
-            weakSelf.lastError = error.localizedDescription;
+            strongSelf.lastError = error.localizedDescription;
             reject(@"RECORDING_ERROR", error.localizedDescription, error);
         } else {
-            weakSelf.isRecording = YES;
-            weakSelf.lastError = nil;
+            strongSelf.isRecording = YES;
+            strongSelf.lastError = nil;
             resolve(@(YES));
         }
     }];
@@ -56,15 +59,18 @@ RCT_EXPORT_MODULE()
         return;
     }
     
-    __weak typeof(self) weakSelf = self;
+    __weak ScreenRecorder *weakSelf = self;
     [self.screenRecorder stopRecordingWithHandler:^(RPPreviewViewController * _Nullable previewViewController, NSError * _Nullable error) {
-        weakSelf.isRecording = NO;
+        ScreenRecorder *strongSelf = weakSelf;
+        if (!strongSelf) return;
+        
+        strongSelf.isRecording = NO;
         
         if (error) {
-            weakSelf.lastError = error.localizedDescription;
+            strongSelf.lastError = error.localizedDescription;
             reject(@"STOP_ERROR", error.localizedDescription, error);
         } else {
-            weakSelf.lastError = nil;
+            strongSelf.lastError = nil;
             // 녹화된 파일의 경로를 반환 (실제로는 더 복잡한 처리가 필요할 수 있음)
             resolve(@"녹화가 완료되었습니다.");
         }
